@@ -1,0 +1,792 @@
+GHCi, version 8.2.2: http://www.haskell.org/ghc/  :? for help
+Prelude> :load LCcompiler
+[1 of 4] Compiling LC2              ( LC2.hs, interpreted )
+[2 of 4] Compiling LCParser         ( LCParser.hs, interpreted )
+[3 of 4] Compiling LCvm             ( LCvm.hs, interpreted )
+[4 of 4] Compiling Main             ( LCcompiler.hs, interpreted )
+Ok, four modules loaded.
+*Main> notTest1
+The program:
+	if ( not tt) then x1 := 2 else x1 := 1
+compiles to
+   0: Push 1
+   2: Push 1
+   4: Ilt
+   5: Jz 8
+   7: Push 2
+   9: Store 1
+  11: Pop
+  12: Jmp 6
+  14: Push 1
+  16: Store 1
+  18: Pop
+  19: Halt
+Here is the run:
+Step 1
+   0: Push 1
+Stack:     []
+Regs(!=0): 	<tap return>
+Step 2
+   2: Push 1
+Stack:     [1]
+Regs(!=0): 	<tap return>
+Step 3
+   4: Ilt
+Stack:     [1,1]
+Regs(!=0): 	<tap return>
+Step 4
+   5: Jz 8
+Stack:     [0]
+Regs(!=0): 	<tap return>
+Step 5
+  14: Push 1
+Stack:     []
+Regs(!=0): 	<tap return>
+Step 6
+  16: Store 1
+Stack:     [1]
+Regs(!=0): 	<tap return>
+Step 7
+  18: Pop
+Stack:     [1]
+Regs(!=0): x1=1 	<tap return>
+Step 8
+  19: Halt
+Stack:     []
+Regs(!=0): x1=1 	<tap return>
+*Main> notTest2
+The program:
+	if ( not ff) then x1 := 2 else x1 := 1
+compiles to
+   0: Push 0
+   2: Push 1
+   4: Ilt
+   5: Jz 8
+   7: Push 2
+   9: Store 1
+  11: Pop
+  12: Jmp 6
+  14: Push 1
+  16: Store 1
+  18: Pop
+  19: Halt
+Here is the run:
+Step 1
+   0: Push 0
+Stack:     []
+Regs(!=0): 	<tap return>
+Step 2
+   2: Push 1
+Stack:     [0]
+Regs(!=0): 	<tap return>
+Step 3
+   4: Ilt
+Stack:     [0,1]
+Regs(!=0): 	<tap return>
+Step 4
+   5: Jz 8
+Stack:     [1]
+Regs(!=0): 	<tap return>
+Step 5
+   7: Push 2
+Stack:     []
+Regs(!=0): 	<tap return>
+Step 6
+   9: Store 1
+Stack:     [2]
+Regs(!=0): 	<tap return>
+Step 7
+  11: Pop
+Stack:     [2]
+Regs(!=0): x1=2 	<tap return>
+Step 8
+  12: Jmp 6
+Stack:     []
+Regs(!=0): x1=2 	<tap return>
+Step 9
+  19: Halt
+Stack:     []
+Regs(!=0): x1=2 	<tap return>
+*Main> leqTest 10 20
+Step 1
+   0: Push 20
+Stack:     []
+Regs(!=0): 	<tap return>
+Step 2
+   2: Push 10
+Stack:     [20]
+Regs(!=0): 	<tap return>
+Step 3
+   4: Ilt
+Stack:     [20,10]
+Regs(!=0): 	<tap return>
+Step 4
+   5: Push 1
+Stack:     [0]
+Regs(!=0): 	<tap return>
+Step 5
+   7: Ilt
+Stack:     [0,1]
+Regs(!=0): 	<tap return>
+Step 6
+   8: Jz 8
+Stack:     [1]
+Regs(!=0): 	<tap return>
+Step 7
+  10: Push 1
+Stack:     []
+Regs(!=0): 	<tap return>
+Step 8
+  12: Store 1
+Stack:     [1]
+Regs(!=0): 	<tap return>
+Step 9
+  14: Pop
+Stack:     [1]
+Regs(!=0): x1=1 	<tap return>
+Step 10
+  15: Jmp 6
+Stack:     []
+Regs(!=0): x1=1 	<tap return>
+Step 11
+  22: Halt
+Stack:     []
+Regs(!=0): x1=1 	<tap return>
+*Main> leqTest 2 1
+Step 1
+   0: Push 1
+Stack:     []
+Regs(!=0): 	<tap return>
+Step 2
+   2: Push 2
+Stack:     [1]
+Regs(!=0): 	<tap return>
+Step 3
+   4: Ilt
+Stack:     [1,2]
+Regs(!=0): 	<tap return>
+Step 4
+   5: Push 1
+Stack:     [1]
+Regs(!=0): 	<tap return>
+Step 5
+   7: Ilt
+Stack:     [1,1]
+Regs(!=0): 	<tap return>
+Step 6
+   8: Jz 8
+Stack:     [0]
+Regs(!=0): 	<tap return>
+Step 7
+  17: Push 2
+Stack:     []
+Regs(!=0): 	<tap return>
+Step 8
+  19: Store 1
+Stack:     [2]
+Regs(!=0): 	<tap return>
+Step 9
+  21: Pop
+Stack:     [2]
+Regs(!=0): x1=2 	<tap return>
+Step 10
+  22: Halt
+Stack:     []
+Regs(!=0): x1=2 	<tap return>
+*Main> geqTest 1 2
+Step 1
+   0: Push 1
+Stack:     []
+Regs(!=0): 	<tap return>
+Step 2
+   2: Push 2
+Stack:     [1]
+Regs(!=0): 	<tap return>
+Step 3
+   4: Ilt
+Stack:     [1,2]
+Regs(!=0): 	<tap return>
+Step 4
+   5: Push 1
+Stack:     [1]
+Regs(!=0): 	<tap return>
+Step 5
+   7: Ilt
+Stack:     [1,1]
+Regs(!=0): 	<tap return>
+Step 6
+   8: Jz 8
+Stack:     [0]
+Regs(!=0): 	<tap return>
+Step 7
+  17: Push 2
+Stack:     []
+Regs(!=0): 	<tap return>
+Step 8
+  19: Store 1
+Stack:     [2]
+Regs(!=0): 	<tap return>
+Step 9
+  21: Pop
+Stack:     [2]
+Regs(!=0): x1=2 	<tap return>
+Step 10
+  22: Halt
+Stack:     []
+Regs(!=0): x1=2 	<tap return>
+*Main> geqTest 2 1
+Step 1
+   0: Push 2
+Stack:     []
+Regs(!=0): 	<tap return>
+Step 2
+   2: Push 1
+Stack:     [2]
+Regs(!=0): 	<tap return>
+Step 3
+   4: Ilt
+Stack:     [2,1]
+Regs(!=0): 	<tap return>
+Step 4
+   5: Push 1
+Stack:     [0]
+Regs(!=0): 	<tap return>
+Step 5
+   7: Ilt
+Stack:     [0,1]
+Regs(!=0): 	<tap return>
+Step 6
+   8: Jz 8
+Stack:     [1]
+Regs(!=0): 	<tap return>
+Step 7
+  10: Push 1
+Stack:     []
+Regs(!=0): 	<tap return>
+Step 8
+  12: Store 1
+Stack:     [1]
+Regs(!=0): 	<tap return>
+Step 9
+  14: Pop
+Stack:     [1]
+Regs(!=0): x1=1 	<tap return>
+Step 10
+  15: Jmp 6
+Stack:     []
+Regs(!=0): x1=1 	<tap return>
+Step 11
+  22: Halt
+Stack:     []
+Regs(!=0): x1=1 	<tap return>
+*Main> clg c9
+Step 1
+   0: Push 3
+Stack:     []
+Regs(!=0): 	<tap return>
+Step 2
+   2: Store 0
+Stack:     [3]
+Regs(!=0): 	<tap return>
+Step 3
+   4: Pop
+Stack:     [3]
+Regs(!=0): x0=3 	<tap return>
+Step 4
+   5: Push 0
+Stack:     []
+Regs(!=0): x0=3 	<tap return>
+Step 5
+   7: Fetch 0
+Stack:     [0]
+Regs(!=0): x0=3 	<tap return>
+Step 6
+   9: Push 0
+Stack:     [0,3]
+Regs(!=0): x0=3 	<tap return>
+Step 7
+  11: Isub
+Stack:     [0,3,0]
+Regs(!=0): x0=3 	<tap return>
+Step 8
+  12: Ilt
+Stack:     [0,3]
+Regs(!=0): x0=3 	<tap return>
+Step 9
+  13: Jz 11
+Stack:     [1]
+Regs(!=0): x0=3 	<tap return>
+Step 10
+  15: Fetch 0
+Stack:     []
+Regs(!=0): x0=3 	<tap return>
+Step 11
+  17: Push 1
+Stack:     [3]
+Regs(!=0): x0=3 	<tap return>
+Step 12
+  19: Isub
+Stack:     [3,1]
+Regs(!=0): x0=3 	<tap return>
+Step 13
+  20: Store 0
+Stack:     [2]
+Regs(!=0): x0=3 	<tap return>
+Step 14
+  22: Pop
+Stack:     [2]
+Regs(!=0): x0=2 	<tap return>
+Step 15
+  23: Jmp 237
+Stack:     []
+Regs(!=0): x0=2 	<tap return>
+Step 16
+   5: Push 0
+Stack:     []
+Regs(!=0): x0=2 	<tap return>
+Step 17
+   7: Fetch 0
+Stack:     [0]
+Regs(!=0): x0=2 	<tap return>
+Step 18
+   9: Push 0
+Stack:     [0,2]
+Regs(!=0): x0=2 	<tap return>
+Step 19
+  11: Isub
+Stack:     [0,2,0]
+Regs(!=0): x0=2 	<tap return>
+Step 20
+  12: Ilt
+Stack:     [0,2]
+Regs(!=0): x0=2 	<tap return>
+Step 21
+  13: Jz 11
+Stack:     [1]
+Regs(!=0): x0=2 	<tap return>
+Step 22
+  15: Fetch 0
+Stack:     []
+Regs(!=0): x0=2 	<tap return>
+Step 23
+  17: Push 1
+Stack:     [2]
+Regs(!=0): x0=2 	<tap return>
+Step 24
+  19: Isub
+Stack:     [2,1]
+Regs(!=0): x0=2 	<tap return>
+Step 25
+  20: Store 0
+Stack:     [1]
+Regs(!=0): x0=2 	<tap return>
+Step 26
+  22: Pop
+Stack:     [1]
+Regs(!=0): x0=1 	<tap return>
+Step 27
+  23: Jmp 237
+Stack:     []
+Regs(!=0): x0=1 	<tap return>
+Step 28
+   5: Push 0
+Stack:     []
+Regs(!=0): x0=1 	<tap return>
+Step 29
+   7: Fetch 0
+Stack:     [0]
+Regs(!=0): x0=1 	<tap return>
+Step 30
+   9: Push 0
+Stack:     [0,1]
+Regs(!=0): x0=1 	<tap return>
+Step 31
+  11: Isub
+Stack:     [0,1,0]
+Regs(!=0): x0=1 	<tap return>
+Step 32
+  12: Ilt
+Stack:     [0,1]
+Regs(!=0): x0=1 	<tap return>
+Step 33
+  13: Jz 11
+Stack:     [1]
+Regs(!=0): x0=1 	<tap return>
+Step 34
+  15: Fetch 0
+Stack:     []
+Regs(!=0): x0=1 	<tap return>
+Step 35
+  17: Push 1
+Stack:     [1]
+Regs(!=0): x0=1 	<tap return>
+Step 36
+  19: Isub
+Stack:     [1,1]
+Regs(!=0): x0=1 	<tap return>
+Step 37
+  20: Store 0
+Stack:     [0]
+Regs(!=0): x0=1 	<tap return>
+Step 38
+  22: Pop
+Stack:     [0]
+Regs(!=0): 	<tap return>
+Step 39
+  23: Jmp 237
+Stack:     []
+Regs(!=0): 	<tap return>
+Step 40
+   5: Push 0
+Stack:     []
+Regs(!=0): 	<tap return>
+Step 41
+   7: Fetch 0
+Stack:     [0]
+Regs(!=0): 	<tap return>
+Step 42
+   9: Push 0
+Stack:     [0,0]
+Regs(!=0): 	<tap return>
+Step 43
+  11: Isub
+Stack:     [0,0,0]
+Regs(!=0): 	<tap return>
+Step 44
+  12: Ilt
+Stack:     [0,0]
+Regs(!=0): 	<tap return>
+Step 45
+  13: Jz 11
+Stack:     [0]
+Regs(!=0): 	<tap return>
+Step 46
+  25: Halt
+Stack:     []
+Regs(!=0): 	<tap return>
+*Main> clg c10
+Step 1
+   0: Push 4
+Stack:     []
+Regs(!=0): 	<tap return>
+Step 2
+   2: Store 0
+Stack:     [4]
+Regs(!=0): 	<tap return>
+Step 3
+   4: Pop
+Stack:     [4]
+Regs(!=0): x0=4 	<tap return>
+Step 4
+   5: Push 1
+Stack:     []
+Regs(!=0): x0=4 	<tap return>
+Step 5
+   7: Store 1
+Stack:     [1]
+Regs(!=0): x0=4 	<tap return>
+Step 6
+   9: Pop
+Stack:     [1]
+Regs(!=0): x0=4 x1=1 	<tap return>
+Step 7
+  10: Fetch 0
+Stack:     []
+Regs(!=0): x0=4 x1=1 	<tap return>
+Step 8
+  12: Push 1
+Stack:     [4]
+Regs(!=0): x0=4 x1=1 	<tap return>
+Step 9
+  14: Ilt
+Stack:     [4,1]
+Regs(!=0): x0=4 x1=1 	<tap return>
+Step 10
+  15: Push 1
+Stack:     [0]
+Regs(!=0): x0=4 x1=1 	<tap return>
+Step 11
+  17: Ilt
+Stack:     [0,1]
+Regs(!=0): x0=4 x1=1 	<tap return>
+Step 12
+  18: Jz 19
+Stack:     [1]
+Regs(!=0): x0=4 x1=1 	<tap return>
+Step 13
+  20: Fetch 1
+Stack:     []
+Regs(!=0): x0=4 x1=1 	<tap return>
+Step 14
+  22: Fetch 0
+Stack:     [1]
+Regs(!=0): x0=4 x1=1 	<tap return>
+Step 15
+  24: Imult
+Stack:     [1,4]
+Regs(!=0): x0=4 x1=1 	<tap return>
+Step 16
+  25: Store 1
+Stack:     [4]
+Regs(!=0): x0=4 x1=1 	<tap return>
+Step 17
+  27: Pop
+Stack:     [4]
+Regs(!=0): x0=4 x1=4 	<tap return>
+Step 18
+  28: Fetch 0
+Stack:     []
+Regs(!=0): x0=4 x1=4 	<tap return>
+Step 19
+  30: Push 1
+Stack:     [4]
+Regs(!=0): x0=4 x1=4 	<tap return>
+Step 20
+  32: Isub
+Stack:     [4,1]
+Regs(!=0): x0=4 x1=4 	<tap return>
+Step 21
+  33: Store 0
+Stack:     [3]
+Regs(!=0): x0=4 x1=4 	<tap return>
+Step 22
+  35: Pop
+Stack:     [3]
+Regs(!=0): x0=3 x1=4 	<tap return>
+Step 23
+  36: Jmp 229
+Stack:     []
+Regs(!=0): x0=3 x1=4 	<tap return>
+Step 24
+  10: Fetch 0
+Stack:     []
+Regs(!=0): x0=3 x1=4 	<tap return>
+
+Step 25
+  12: Push 1
+Stack:     [3]
+Regs(!=0): x0=3 x1=4 	<tap return>Step 26
+  14: Ilt
+Stack:     [3,1]
+Regs(!=0): x0=3 x1=4 	<tap return>
+Step 27
+  15: Push 1
+Stack:     [0]
+Regs(!=0): x0=3 x1=4 	<tap return>
+Step 28
+  17: Ilt
+Stack:     [0,1]
+Regs(!=0): x0=3 x1=4 	<tap return>
+Step 29
+  18: Jz 19
+Stack:     [1]
+Regs(!=0): x0=3 x1=4 	<tap return>
+Step 30
+  20: Fetch 1
+Stack:     []
+Regs(!=0): x0=3 x1=4 	<tap return>
+Step 31
+  22: Fetch 0
+Stack:     [4]
+Regs(!=0): x0=3 x1=4 	<tap return>
+Step 32
+  24: Imult
+Stack:     [4,3]
+Regs(!=0): x0=3 x1=4 	<tap return>
+Step 33
+  25: Store 1
+Stack:     [12]
+Regs(!=0): x0=3 x1=4 	<tap return>
+Step 34
+  27: Pop
+Stack:     [12]
+Regs(!=0): x0=3 x1=12 	<tap return>
+Step 35
+  28: Fetch 0
+Stack:     []
+Regs(!=0): x0=3 x1=12 	<tap return>
+Step 36
+  30: Push 1
+Stack:     [3]
+Regs(!=0): x0=3 x1=12 	<tap return>
+Step 37
+  32: Isub
+Stack:     [3,1]
+Regs(!=0): x0=3 x1=12 	<tap return>
+Step 38
+  33: Store 0
+Stack:     [2]
+Regs(!=0): x0=3 x1=12 	<tap return>
+Step 39
+  35: Pop
+Stack:     [2]
+Regs(!=0): x0=2 x1=12 	<tap return>
+Step 40
+  36: Jmp 229
+Stack:     []
+Regs(!=0): x0=2 x1=12 	<tap return>
+Step 41
+  10: Fetch 0
+Stack:     []
+Regs(!=0): x0=2 x1=12 	<tap return>
+Step 42
+  12: Push 1
+Stack:     [2]
+Regs(!=0): x0=2 x1=12 	<tap return>
+Step 43
+  14: Ilt
+Stack:     [2,1]
+Regs(!=0): x0=2 x1=12 	<tap return>
+Step 44
+  15: Push 1
+Stack:     [0]
+Regs(!=0): x0=2 x1=12 	<tap return>
+Step 45
+  17: Ilt
+Stack:     [0,1]
+Regs(!=0): x0=2 x1=12 	<tap return>
+Step 46
+  18: Jz 19
+Stack:     [1]
+Regs(!=0): x0=2 x1=12 	<tap return>
+Step 47
+  20: Fetch 1
+Stack:     []
+Regs(!=0): x0=2 x1=12 	<tap return>
+Step 48
+  22: Fetch 0
+Stack:     [12]
+Regs(!=0): x0=2 x1=12 	<tap return>
+Step 49
+  24: Imult
+Stack:     [12,2]
+Regs(!=0): x0=2 x1=12 	<tap return>
+Step 50
+  25: Store 1
+Stack:     [24]
+Regs(!=0): x0=2 x1=12 	<tap return>
+Step 51
+  27: Pop
+Stack:     [24]
+Regs(!=0): x0=2 x1=24 	<tap return>
+Step 52
+  28: Fetch 0
+Stack:     []
+Regs(!=0): x0=2 x1=24 	<tap return>
+Step 53
+  30: Push 1
+Stack:     [2]
+Regs(!=0): x0=2 x1=24 	<tap return>
+Step 54
+  32: Isub
+Stack:     [2,1]
+Regs(!=0): x0=2 x1=24 	<tap return>
+Step 55
+  33: Store 0
+Stack:     [1]
+Regs(!=0): x0=2 x1=24 	<tap return>
+Step 56
+  35: Pop
+Stack:     [1]
+Regs(!=0): x0=1 x1=24 	<tap return>
+Step 57
+  36: Jmp 229
+Stack:     []
+Regs(!=0): x0=1 x1=24 	<tap return>
+Step 58
+  10: Fetch 0
+Stack:     []
+Regs(!=0): x0=1 x1=24 	<tap return>
+Step 59
+  12: Push 1
+Stack:     [1]
+Regs(!=0): x0=1 x1=24 	<tap return>
+Step 60
+  14: Ilt
+Stack:     [1,1]
+Regs(!=0): x0=1 x1=24 	<tap return>
+Step 61
+  15: Push 1
+Stack:     [0]
+Regs(!=0): x0=1 x1=24 	<tap return>
+Step 62
+  17: Ilt
+Stack:     [0,1]
+Regs(!=0): x0=1 x1=24 	<tap return>
+Step 63
+  18: Jz 19
+Stack:     [1]
+Regs(!=0): x0=1 x1=24 	<tap return>
+Step 64
+  20: Fetch 1
+Stack:     []
+Regs(!=0): x0=1 x1=24 	<tap return>
+Step 65
+  22: Fetch 0
+Stack:     [24]
+Regs(!=0): x0=1 x1=24 	<tap return>
+Step 66
+  24: Imult
+Stack:     [24,1]
+Regs(!=0): x0=1 x1=24 	<tap return>
+Step 67
+  25: Store 1
+Stack:     [24]
+Regs(!=0): x0=1 x1=24 	<tap return>
+Step 68
+  27: Pop
+Stack:     [24]
+Regs(!=0): x0=1 x1=24 	<tap return>
+Step 69
+  28: Fetch 0
+Stack:     []
+Regs(!=0): x0=1 x1=24 	<tap return>
+Step 70
+  30: Push 1
+Stack:     [1]
+Regs(!=0): x0=1 x1=24 	<tap return>
+Step 71
+  32: Isub
+Stack:     [1,1]
+Regs(!=0): x0=1 x1=24 	<tap return>
+Step 72
+  33: Store 0
+Stack:     [0]
+Regs(!=0): x0=1 x1=24 	<tap return>
+Step 73
+  35: Pop
+Stack:     [0]
+Regs(!=0): x1=24 	<tap return>
+Step 74
+  36: Jmp 229
+Stack:     []
+Regs(!=0): x1=24 	<tap return>
+Step 75
+  10: Fetch 0
+Stack:     []
+Regs(!=0): x1=24 	<tap return>
+Step 76
+  12: Push 1
+Stack:     [0]
+Regs(!=0): x1=24 	<tap return>
+Step 77
+  14: Ilt
+Stack:     [0,1]
+Regs(!=0): x1=24 	<tap return>
+Step 78
+  15: Push 1
+Stack:     [1]
+Regs(!=0): x1=24 	<tap return>
+Step 79
+  17: Ilt
+Stack:     [1,1]
+Regs(!=0): x1=24 	<tap return>
+Step 80
+  18: Jz 19
+Stack:     [0]
+Regs(!=0): x1=24 	<tap return>
+Step 81
+  38: Halt
+Stack:     []
+Regs(!=0): x1=24 	<tap return>
+*Main> 

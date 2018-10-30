@@ -1,0 +1,162 @@
+GHCi, version 8.2.2: http://www.haskell.org/ghc/  :? for help
+Prelude> :load LFP2bs
+[1 of 4] Compiling State            ( State.hs, interpreted )
+[2 of 4] Compiling LFP2             ( LFP2.hs, interpreted )
+[3 of 4] Compiling LFP2parser       ( LFP2parser.hs, interpreted )
+[4 of 4] Compiling Main             ( LFP2bs.hs, interpreted )
+
+LFP2bs.hs:89:1: warning: [-Woverlapping-patterns]
+    Pattern match is redundant
+    In an equation for ¡®eval¡¯: eval env (Var x, s) = ...
+   |
+89 | eval env (Var x,s)     = (elookup x env,s)
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+LFP2bs.hs:90:1: warning: [-Woverlapping-patterns]
+    Pattern match is redundant
+    In an equation for ¡®eval¡¯: eval env (Fun x e, s) = ...
+   |
+90 | eval env (Fun x e,s)   = ((Fun x e),s)
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+LFP2bs.hs:91:1: warning: [-Woverlapping-patterns]
+    Pattern match is redundant
+    In an equation for ¡®eval¡¯: eval env (App e1 e2, s) = ...
+   |
+91 | eval env (App e1 e2,s) = eval (extend env x val) (e1'',s2)
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^...
+Ok, four modules loaded.
+*Main> runAll
+Evaluating:
+    let y = 1 in  let f = (fn x => (+ x y)) in  let y = 10 in (f 100)
+Result:
+    101
+    Locs(!=0): X[0]=4 
+
+Evaluating:
+    let f = (fn x => { X1 := (+ x val(X1)); return val(X1) }) in let x = (f 1) in (+ x (+ x x))
+Result:
+    3
+    Locs(!=0): X[0]=4 X[1]=1 
+
+Evaluating:
+    let f = (fn x => { X1 := 100; return 0}) in  let g = (fn y => 12) in (g (f 9))
+Result:
+    12
+    Locs(!=0): X[0]=4 X[1]=100 
+
+Evaluating:
+    let x = 1 in let f = (fn y => (* x y)) in  let g = (fn x => (f x)) in  print((g 10),(g 100),(g 1000))
+Result:
+    skip
+    Locs(!=0): X[0]=4 
+
+Evaluating:
+    let x = 1 in  let f = (fn n => { X1 := (+ val(X1) x); return n}) in  let x = 100 in  let g = (fn z => (+ z z)) in  (g (f 12))
+Result:
+    24
+    Locs(!=0): X[0]=4 X[1]=1 
+
+Evaluating:
+    let f = (fn n => 0) in  let f = (fn n => if (< n 1) then 1 else (* n (f (- n 1))))  in (f 3)
+Result:
+    0
+    Locs(!=0): X[0]=4 
+
+*Main> :r
+[4 of 4] Compiling Main             ( LFP2bs.hs, interpreted )
+
+LFP2bs.hs:99:1: warning: [-Woverlapping-patterns]
+    Pattern match is redundant
+    In an equation for ¡®eval¡¯: eval env (Var x, s) = ...
+   |
+99 | eval env (Var x,s)     = eval env'' (e,s)
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^...
+
+LFP2bs.hs:101:1: warning: [-Woverlapping-patterns]
+    Pattern match is redundant
+    In an equation for ¡®eval¡¯: eval env (Fun x e, s) = ...
+    |
+101 | eval env (Fun x e,s)   = (Closure (Fun x e) env, s)
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+LFP2bs.hs:102:1: warning: [-Woverlapping-patterns]
+    Pattern match is redundant
+    In an equation for ¡®eval¡¯: eval env (App e1 e2, s) = ...
+    |
+102 | eval env (App e1 e2,s) = eval (extend env'' x (Closure e2 env)) (e1'',s1)
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^...
+Ok, four modules loaded.
+*Main> runAll
+Evaluating:
+    let y = 1 in  let f = (fn x => (+ x y)) in  let y = 10 in (f 100)
+Result:
+    101
+    Locs(!=0): X[0]=4 
+
+Evaluating:
+    let f = (fn x => { X1 := (+ x val(X1)); return val(X1) }) in let x = (f 1) in (+ x (+ x x))
+Result:
+    3
+    Locs(!=0): X[0]=4 X[1]=1 
+
+Evaluating:
+    let f = (fn x => { X1 := 100; return 0}) in  let g = (fn y => 12) in (g (f 9))
+Result:
+    12
+    Locs(!=0): X[0]=4 X[1]=100 
+
+Evaluating:
+    let x = 1 in let f = (fn y => (* x y)) in  let g = (fn x => (f x)) in  print((g 10),(g 100),(g 1000))
+Result:
+    PRINT: 10  100  1000
+
+skip
+    Locs(!=0): X[0]=4 
+
+Evaluating:
+    let x = 1 in  let f = (fn n => { X1 := (+ val(X1) x); return n}) in  let x = 100 in  let g = (fn z => (+ z z)) in  (g (f 12))
+Result:
+    24
+    Locs(!=0): X[0]=4 X[1]=1 
+
+Evaluating:
+    let f = (fn n => 0) in  let f = (fn n => if (< n 1) then 1 else (* n (f (- n 1))))  in (f 3)
+Result:
+    0
+    Locs(!=0): X[0]=4 
+
+*Main> runAllbut6
+Evaluating:
+    let y = 1 in  let f = (fn x => (+ x y)) in  let y = 10 in (f 100)
+Result:
+    101
+    Locs(!=0): X[0]=4 
+
+Evaluating:
+    let f = (fn x => { X1 := (+ x val(X1)); return val(X1) }) in let x = (f 1) in (+ x (+ x x))
+Result:
+    3
+    Locs(!=0): X[0]=4 X[1]=1 
+
+Evaluating:
+    let f = (fn x => { X1 := 100; return 0}) in  let g = (fn y => 12) in (g (f 9))
+Result:
+    12
+    Locs(!=0): X[0]=4 X[1]=100 
+
+Evaluating:
+    let x = 1 in let f = (fn y => (* x y)) in  let g = (fn x => (f x)) in  print((g 10),(g 100),(g 1000))
+Result:
+    PRINT: 10  100  1000
+
+skip
+    Locs(!=0): X[0]=4 
+
+Evaluating:
+    let x = 1 in  let f = (fn n => { X1 := (+ val(X1) x); return n}) in  let x = 100 in  let g = (fn z => (+ z z)) in  (g (f 12))
+Result:
+    24
+    Locs(!=0): X[0]=4 X[1]=1 
+
+*Main> 

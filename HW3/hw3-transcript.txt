@@ -1,0 +1,45 @@
+GHCi, version 8.2.2: http://www.haskell.org/ghc/  :? for help
+Prelude> :load hw3
+[1 of 1] Compiling Main             ( hw3.hs, interpreted )
+Ok, one module loaded.
+*Main> rmChar 'x' "foo"
+"foo"
+*Main> rmChar 'x' "fox"
+"fo"
+*Main> rmChar 'x' "axvsdvfox"
+"avsdvfo"
+*Main> rmChar 'a' "aasuaacs"
+"sucs"
+*Main> rmCharsRec "wx" "foo"
+"foo"
+*Main> rmCharsRec "ox" "fox"
+"f"
+*Main> rmCharsRec "ax" "aabbccxxddee"
+"bbccddee"
+*Main> rmCharsFold "cv" "zaq"
+"zaq"
+*Main> rmCharsFold "cv" "cczaqxx"
+"zaqxx"
+*Main> rmCharsFold "cv" "cczacccqxx"
+"zaqxx"
+*Main> andRec []
+True
+*Main> andRec [True,True]
+True
+*Main> andRec [True,False]
+False
+*Main> andFold [True,True]
+True
+*Main> andFold [False,True]
+False
+*Main> andFold []
+True
+*Main> same []
+True
+*Main> same [33]
+True
+*Main> same [1,1,1]
+True
+*Main> same [1,2,3]
+False
+*Main> 

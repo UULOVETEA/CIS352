@@ -1,0 +1,37 @@
+GHCi, version 8.2.2: http://www.haskell.org/ghc/  :? for help
+Prelude> :load ITree
+[1 of 1] Compiling ITree            ( ITree.hs, interpreted )
+Ok, one module loaded.
+*ITree> treeInsert t11 'b'
+Node 'p' (Node 'g' (Node 'c' (Node 'a' Empty (Node 'b' Empty Empty 0) 9) (Node 'e' Empty Empty 8) 2) (Node 'j' Empty Empty 2) 4) (Node 't' (Node 'r' (Node 'q' Empty Empty 7) (Node 's' Empty Empty 10) 6) (Node 'w' Empty Empty 0) 4) 6
+*ITree> treeInsert t11 'z'
+Node 'p' (Node 'g' (Node 'c' (Node 'a' Empty Empty 9) (Node 'e' Empty Empty 8) 1) (Node 'j' Empty Empty 2) 3) (Node 't' (Node 'r' (Node 'q' Empty Empty 7) (Node 's' Empty Empty 10) 6) (Node 'w' Empty (Node 'z' Empty Empty 0) 0) 4) 5
+*ITree> quickCheck prop_treeInsert1
++++ OK, passed 100 tests.
+*ITree> quickCheck prop_treeInsert2
++++ OK, passed 100 tests.
+*ITree> index t11 'a'
+9
+*ITree> index t11 'b'
+*** Exception: b not in the tree
+CallStack (from HasCallStack):
+  error, called at ITree.hs:43:17 in main:ITree
+*ITree> index t11 't'
+4
+*ITree> quickCheck prop_index
+*** Failed! Falsifiable (after 9 tests and 5 shrinks):
+"Aa"
+*ITree> fetch t11 20
+*** Exception: index out of bounds
+CallStack (from HasCallStack):
+  error, called at ITree.hs:52:17 in main:ITree
+*ITree> fetch t11 4
+'t'
+*ITree> quickCheck prop_fetch
+*** Failed! (after 7 tests and 3 shrinks):
+Exception:
+  index out of bounds
+  CallStack (from HasCallStack):
+    error, called at ITree.hs:52:17 in main:ITree
+"ba"
+*ITree> 

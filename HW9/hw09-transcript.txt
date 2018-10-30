@@ -1,0 +1,49 @@
+GHCi, version 8.2.2: http://www.haskell.org/ghc/  :? for help
+Prelude> :load template
+[1 of 1] Compiling Main             ( template.hs, interpreted )
+Ok, one module loaded.
+*Main> t1
+TInt
+*Main> t2
+TBool
+*Main> t3
+*** Exception: Maybe.fromJust: Nothing
+*Main> t4
+TInt
+*Main> t5
+TBool
+*Main> t6
+TErr
+*Main> t7
+["hello","dolly"]
+*Main> t8
+[">","=="]
+*Main> t9
+[]
+*Main> t10
+False
+*Main> t11
+False
+*Main> t12
+True
+*Main> testIT
+*Main> t13
+TInt
+*Main> t14
+TFun TBool TBool
+*Main> t15
+TVar "c"
+*Main> testU
+*Main> inferPolyType ex9
+TFun (TVar "a1") TBool
+*Main> inferPolyType ex10
+TFun (TVar "a1") (TVar "a1")
+*Main> inferPolyType ex11
+TFun TBool TBool
+*Main> inferPolyType ex12
+TFun (TVar "a1") (TFun (TFun (TVar "a1") (TVar "a3")) (TVar "a3"))
+*Main> inferPolyType ex13
+TFun (TVar "a1") (TFun (TFun (TVar "a1") (TFun TInt (TVar "a3"))) (TVar "a3"))
+*Main> inferPolyType ex14
+TFun (TFun (TFun TInt (TFun TInt TInt)) (TVar "a3")) (TFun (TVar "a2") (TVar "a3"))
+*Main> 

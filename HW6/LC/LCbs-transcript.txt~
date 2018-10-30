@@ -1,0 +1,23 @@
+GHCi, version 8.2.2: http://www.haskell.org/ghc/  :? for help
+Prelude> :load LCbs
+[1 of 5] Compiling State            ( State.hs, interpreted )
+[2 of 5] Compiling LC               ( LC.hs, interpreted )
+[3 of 5] Compiling LCParser         ( LCParser.hs, interpreted )
+[4 of 5] Compiling LCCEK            ( LCCEK.hs, interpreted )
+[5 of 5] Compiling Main             ( LCbs.hs, interpreted )
+Ok, five modules loaded.
+*Main> runA ae0 state4
+(0,fromList [(0,4),(1,0),(2,0),(3,0),(4,0)])
+*Main> runB be0 state4
+(tt,fromList [(0,4),(1,0),(2,0),(3,0),(4,0)])
+*Main> runC cmd0 state4
+(skip,fromList [(0,4),(1,0),(2,0),(3,0),(4,0)])
+*Main> quickCheck bs_prop
++++ OK, passed 100 tests.
+*Main> evalA (exA,state4)
+(19,fromList [(0,4),(1,0),(2,0),(3,0),(4,0)])
+*Main> evalB (exB,state4)
+(tt,fromList [(0,4),(1,0),(2,0),(3,0),(4,0)])
+*Main> evalC (exC,state4)
+(skip,fromList [(0,4),(1,24),(2,0),(3,0),(4,0)])
+*Main> 

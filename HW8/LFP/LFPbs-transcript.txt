@@ -1,0 +1,102 @@
+GHCi, version 8.2.2: http://www.haskell.org/ghc/  :? for help
+Prelude> :load LFPbs
+[1 of 4] Compiling State            ( State.hs, interpreted )
+[2 of 4] Compiling LFPas            ( LFPas.hs, interpreted )
+[3 of 4] Compiling LFPparser        ( LFPparser.hs, interpreted )
+[4 of 4] Compiling Main             ( LFPbs.hs, interpreted )
+Ok, four modules loaded.
+*Main> (freeVars (eparse "fn y => (* (+ x y) z)"))
+["x","z"]
+*Main> runFvAll
+Cases: 5  Tried: 5  Errors: 0  Failures: 0
+Counts {cases = 5, tried = 5, errors = 0, failures = 0}
+*Main> st1
+Computing: x[(y w)/x]
+result =   (y w)
+
+*Main> st2
+Computing: z[(y w)/x]
+result =   z
+
+*Main> st3
+Computing: (z x)[(y w)/x]
+result =   (z (y w))
+
+*Main> st4
+Computing: (fn x => z)[(y w)/x]
+result =   (fn x => z)
+
+*Main> st5
+Computing: (fn t => z)[(y w)/x]
+result =   (fn a => z)
+
+*Main> st6
+Computing: (fn t => x)[(y w)/x]
+result =   (fn a => (y w))
+
+*Main> st7
+Computing: (fn y => (x y))[(y w)/x]
+result =   (fn a => (y w y))
+
+*Main> st8
+Computing: (y (y z))[(z w)/x]
+result =   (y (y z))
+
+*Main> st9
+Computing: (fn u => fn w => (w x u))[(u w)/x]
+result =   (fn a => (fn b => (w (u w) u)))
+
+*Main> st11
+Computing: let x = (+ y x) in (+ y x)[3/x]
+result =   let x = (+ y 3) in (+ y x)
+
+*Main> et1
+Evaluating:
+    { X1 := 1;  while (> val(X0) 0) do {  X1 := (* val(X1) val(X0)); X0 := (- val(X0) 1) }}
+Result:
+    skip
+    Locs(!=0): X[1]=24 
+
+*Main> et2
+Evaluating:
+    let x = 2 in (+ 10 x)
+Result:
+    12
+    Locs(!=0): X[0]=4 
+
+*Main> et4
+Evaluating:
+    (fn x => (+ x 2))
+Result:
+    (fn x => (+ x 2))
+    Locs(!=0): X[0]=4 
+
+*Main> et5
+Evaluating:
+    ((fn x => (+ x 2)) 19)
+Result:
+    21
+    Locs(!=0): X[0]=4 
+
+*Main> et8
+Evaluating:
+    let c =  fn x => { X1 := (* val(X1) val(X0)); X0 := (- val(X0) x) } in  { X1 := 1;  while (> val(X0) 0) do (c 1) }
+Result:
+    skip
+    Locs(!=0): X[1]=24 
+
+*Main> et9
+Evaluating:
+    let c =  fn x => { X1 := (* val(X1) val(X0)); X0 := (- val(X0) x) } in  { X1 := 1;  while (> val(X0) 0) do (c 2) }
+Result:
+    skip
+    Locs(!=0): X[1]=8 
+
+*Main> et10
+Evaluating:
+    let c = { X1 := (* val(X1) val(X0)) } in  { X1 := 1;  while (> val(X0) 0) do { c; X0 := (- val(X0) 1) }}
+Result:
+    skip
+    Locs(!=0): X[1]=24 
+
+*Main>

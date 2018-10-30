@@ -1,0 +1,20 @@
+GHCi, version 8.2.2: http://www.haskell.org/ghc/  :? for help
+Prelude> :load prop
+[1 of 1] Compiling Main             ( prop.hs, interpreted )
+Ok, one module loaded.
+*Main> fullTable (vp :#: vq)
+P Q | (P#Q)
+- - | -----
+T T |   F  
+T F |   T  
+F T |   T  
+F F |   T  
+
+*Main> runTestTT testsNNF
+Cases: 4  Tried: 4  Errors: 0  Failures: 0
+Counts {cases = 4, tried = 4, errors = 0, failures = 0}
+*Main> quickCheck nnf1_prop
++++ OK, passed 100 tests.
+*Main> quickCheck nnf2_prop
++++ OK, passed 100 tests.
+*Main> 

@@ -1,0 +1,125 @@
+GHCi, version 8.2.2: http://www.haskell.org/ghc/  :? for help
+Prelude> :load LFP2bs
+[1 of 4] Compiling State            ( State.hs, interpreted )
+[2 of 4] Compiling LFP2             ( LFP2.hs, interpreted )
+[3 of 4] Compiling LFP2parser       ( LFP2parser.hs, interpreted )
+[4 of 4] Compiling Main             ( LFP2bs.hs, interpreted )
+Ok, four modules loaded.
+*Main> runAll
+Evaluating:
+    let y = 1 in  let f = (fn x => (+ x y)) in  let y = 10 in (f 100)
+Result:
+    110
+    Locs(!=0): X[0]=4 
+
+Evaluating:
+    let f = (fn x => { X1 := (+ x val(X1)); return val(X1) }) in let x = (f 1) in (+ x (+ x x))
+Result:
+    3
+    Locs(!=0): X[0]=4 X[1]=1 
+
+Evaluating:
+    let f = (fn x => { X1 := 100; return 0}) in  let g = (fn y => 12) in (g (f 9))
+Result:
+    12
+    Locs(!=0): X[0]=4 X[1]=100 
+
+Evaluating:
+    let x = 1 in let f = (fn y => (* x y)) in  let g = (fn x => (f x)) in  print((g 10),(g 100),(g 1000))
+Result:
+    PRINT: 100  10000  1000000
+
+skip
+    Locs(!=0): X[0]=4 
+
+Evaluating:
+    let x = 1 in  let f = (fn n => { X1 := (+ val(X1) x); return n}) in  let x = 100 in  let g = (fn z => (+ z z)) in  (g (f 12))
+Result:
+    24
+    Locs(!=0): X[0]=4 X[1]=100 
+
+Evaluating:
+    let f = (fn n => 0) in  let f = (fn n => if (< n 1) then 1 else (* n (f (- n 1))))  in (f 3)
+Result:
+    6
+    Locs(!=0): X[0]=4 
+
+*Main> :r
+[4 of 4] Compiling Main             ( LFP2bs.hs, interpreted )
+Ok, four modules loaded.
+*Main> runAll
+Evaluating:
+    let y = 1 in  let f = (fn x => (+ x y)) in  let y = 10 in (f 100)
+Result:
+    101
+    Locs(!=0): X[0]=4 
+
+Evaluating:
+    let f = (fn x => { X1 := (+ x val(X1)); return val(X1) }) in let x = (f 1) in (+ x (+ x x))
+Result:
+    6
+    Locs(!=0): X[0]=4 X[1]=3 
+
+Evaluating:
+    let f = (fn x => { X1 := 100; return 0}) in  let g = (fn y => 12) in (g (f 9))
+Result:
+    12
+    Locs(!=0): X[0]=4 
+
+Evaluating:
+    let x = 1 in let f = (fn y => (* x y)) in  let g = (fn x => (f x)) in  print((g 10),(g 100),(g 1000))
+Result:
+    PRINT: 10  100  1000
+
+skip
+    Locs(!=0): X[0]=4 
+
+Evaluating:
+    let x = 1 in  let f = (fn n => { X1 := (+ val(X1) x); return n}) in  let x = 100 in  let g = (fn z => (+ z z)) in  (g (f 12))
+Result:
+    24
+    Locs(!=0): X[0]=4 X[1]=2 
+
+Evaluating:
+    let f = (fn n => 0) in  let f = (fn n => if (< n 1) then 1 else (* n (f (- n 1))))  in (f 3)
+Result:
+    0
+    Locs(!=0): X[0]=4 
+
+*Main> :r
+[4 of 4] Compiling Main             ( LFP2bs.hs, interpreted )
+Ok, four modules loaded.
+*Main> runAllbut6
+Evaluating:
+    let y = 1 in  let f = (fn x => (+ x y)) in  let y = 10 in (f 100)
+Result:
+    110
+    Locs(!=0): X[0]=4 
+
+Evaluating:
+    let f = (fn x => { X1 := (+ x val(X1)); return val(X1) }) in let x = (f 1) in (+ x (+ x x))
+Result:
+    6
+    Locs(!=0): X[0]=4 X[1]=3 
+
+Evaluating:
+    let f = (fn x => { X1 := 100; return 0}) in  let g = (fn y => 12) in (g (f 9))
+Result:
+    12
+    Locs(!=0): X[0]=4 
+
+Evaluating:
+    let x = 1 in let f = (fn y => (* x y)) in  let g = (fn x => (f x)) in  print((g 10),(g 100),(g 1000))
+Result:
+    PRINT: 100  10000  1000000
+
+skip
+    Locs(!=0): X[0]=4 
+
+Evaluating:
+    let x = 1 in  let f = (fn n => { X1 := (+ val(X1) x); return n}) in  let x = 100 in  let g = (fn z => (+ z z)) in  (g (f 12))
+Result:
+    24
+    Locs(!=0): X[0]=4 X[1]=200 
+
+*Main> 

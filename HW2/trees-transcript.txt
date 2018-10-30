@@ -1,0 +1,45 @@
+GHCi, version 8.2.2: http://www.haskell.org/ghc/  :? for help
+Prelude> :load trees
+[1 of 1] Compiling Main             ( trees.hs, interpreted )
+Ok, one module loaded.
+*Main> bmaxDepth Empty
+-1
+*Main> bmaxDepth (Branch 'x' Empty Empty)
+0
+*Main> bmaxDepth t1
+2
+*Main> mmaxDepth (Node 'x' [])
+0
+*Main> mmaxDepth t2
+2
+*Main> (bleaves Empty)
+""
+*Main> (bleaves t1)
+"amq"
+*Main> quickCheck bleaves_prop
++++ OK, passed 100 tests.
+*Main> mleaves t2
+"cqmgjz"
+*Main> quickCheck mleaves_prop
++++ OK, passed 100 tests.
+*Main> (blevel 0 t1)
+""
+*Main> (blevel 1 t1)
+"x"
+*Main> (blevel 2 t1)
+"tw"
+*Main> (blevel 3 t1)
+"amq"
+*Main> (blevel 4 t1)
+""
+*Main> (mlevel 0 t2)
+""
+*Main> (mlevel 1 t2)
+"u"
+*Main> (mlevel 2 t2)
+"cqny"
+*Main> (mlevel 3 t2)
+"mgjz"
+*Main> (mlevel 4 t2)
+""
+*Main> 

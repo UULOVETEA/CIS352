@@ -1,0 +1,408 @@
+GHCi, version 8.2.2: http://www.haskell.org/ghc/  :? for help
+Prelude> :load LCvm
+[1 of 2] Compiling LC2              ( LC2.hs, interpreted )
+[2 of 2] Compiling LCvm             ( LCvm.hs, interpreted )
+Ok, two modules loaded.
+*LCvm> incTest 0
+Step 1
+   0: Push 0
+Stack:     []
+Regs(!=0): 	<tap return>
+Step 2
+   2: Inc
+Stack:     [0]
+Regs(!=0): 	<tap return>
+Step 3
+   3: Halt
+Stack:     [1]
+Regs(!=0): 	<tap return>
+*LCvm> incTest 255
+Step 1
+   0: Push 255
+Stack:     []
+Regs(!=0): 	<tap return>
+Step 2
+   2: Inc
+Stack:     [255]
+Regs(!=0): 	<tap return>
+Step 3
+   3: Halt
+Stack:     [0]
+Regs(!=0): 	<tap return>
+*LCvm> decTest 255
+Step 1
+   0: Push 255
+Stack:     []
+Regs(!=0): 	<tap return>
+Step 2
+   2: Dec
+Stack:     [255]
+Regs(!=0): 	<tap return>
+Step 3
+   3: Halt
+Stack:     [254]
+Regs(!=0): 	<tap return>
+*LCvm> decTest 0
+Step 1
+   0: Push 0
+Stack:     []
+Regs(!=0): 	<tap return>
+Step 2
+   2: Dec
+Stack:     [0]
+Regs(!=0): 	<tap return>
+Step 3
+   3: Halt
+Stack:     [255]
+Regs(!=0): 	<tap return>
+*LCvm> niTest 0
+Step 1
+   0: Push 0
+Stack:     []
+Regs(!=0): 	<tap return>
+Step 2
+   2: Ni
+Stack:     [0]
+Regs(!=0): 	<tap return>
+Step 3
+   3: Halt
+Stack:     [1]
+Regs(!=0): 	<tap return>
+*LCvm> dupTest []
+Step 1
+   0: Dup
+Stack:     []
+Regs(!=0): 	<tap return>
+Step 2
+   1: Halt
+Stack:     []
+Regs(!=0): 	<tap return>
+*LCvm> dupTest [1,2,3,4,5]
+Step 1
+   0: Push 1
+Stack:     []
+Regs(!=0): 	<tap return>
+Step 2
+   2: Push 2
+Stack:     [1]
+Regs(!=0): 	<tap return>
+Step 3
+   4: Push 3
+Stack:     [1,2]
+Regs(!=0): 	<tap return>
+Step 4
+   6: Push 4
+Stack:     [1,2,3]
+Regs(!=0): 	<tap return>
+Step 5
+   8: Push 5
+Stack:     [1,2,3,4]
+Regs(!=0): 	<tap return>
+Step 6
+  10: Dup
+Stack:     [1,2,3,4,5]
+Regs(!=0): 	<tap return>
+Step 7
+  11: Halt
+Stack:     [1,2,3,4,5,5]
+Regs(!=0): 	<tap return>
+*LCvm> callRetTest 5
+Step 1
+   0: Call 10
+Stack:     []
+Regs(!=0): 	<tap return>
+Step 2
+  10: Push 10
+Stack:     [2]
+Regs(!=0): 	<tap return>
+Step 3
+  12: Store 0
+Stack:     [2,10]
+Regs(!=0): 	<tap return>
+Step 4
+  14: Pop
+Stack:     [2,10]
+Regs(!=0): x0=10 	<tap return>
+Step 5
+  15: Ret
+Stack:     [2]
+Regs(!=0): x0=10 	<tap return>
+Step 6
+   2: Push 20
+Stack:     []
+Regs(!=0): x0=10 	<tap return>
+Step 7
+   4: Halt
+Stack:     [20]
+Regs(!=0): x0=10 	<tap return>
+*LCvm> stepRun fact4'
+Step 1
+   0: Push 4
+Stack:     []
+Regs(!=0): 	<tap return>
+
+Step 2
+   2: Store 0
+Stack:     [4]
+Regs(!=0): 	<tap return>Step 3
+   4: Pop
+Stack:     [4]
+Regs(!=0): x0=4 	<tap return>
+
+Step 4
+   5: Call 8
+Stack:     []
+Regs(!=0): x0=4 	<tap return>Step 5
+   8: Fetch 0
+Stack:     [7]
+Regs(!=0): x0=4 	<tap return>
+Step 6
+  10: Jnz 7
+Stack:     [7,4]
+Regs(!=0): x0=4 	<tap return>
+Step 7
+  18: Fetch 0
+Stack:     [7]
+Regs(!=0): x0=4 	<tap return>
+
+Step 8
+  20: Dup
+Stack:     [7,4]
+Regs(!=0): x0=4 	<tap return>Step 9
+  21: Push 1
+Stack:     [7,4,4]
+Regs(!=0): x0=4 	<tap return>
+
+Step 10
+  23: Isub
+Stack:     [7,4,4,1]
+Regs(!=0): x0=4 	<tap return>Step 11
+  24: Store 0
+Stack:     [7,4,3]
+Regs(!=0): x0=4 	<tap return>
+
+Step 12
+  26: Pop
+Stack:     [7,4,3]
+Regs(!=0): x0=3 	<tap return>Step 13
+  27: Call 8
+Stack:     [7,4]
+Regs(!=0): x0=3 	<tap return>
+
+Step 14
+   8: Fetch 0
+Stack:     [7,4,29]
+Regs(!=0): x0=3 	<tap return>Step 15
+  10: Jnz 7
+Stack:     [7,4,29,3]
+Regs(!=0): x0=3 	<tap return>
+
+Step 16
+  18: Fetch 0
+Stack:     [7,4,29]
+Regs(!=0): x0=3 	<tap return>Step 17
+  20: Dup
+Stack:     [7,4,29,3]
+Regs(!=0): x0=3 	<tap return>
+
+Step 18
+  21: Push 1
+Stack:     [7,4,29,3,3]
+Regs(!=0): x0=3 	<tap return>Step 19
+  23: Isub
+Stack:     [7,4,29,3,3,1]
+Regs(!=0): x0=3 	<tap return>
+
+Step 20
+  24: Store 0
+Stack:     [7,4,29,3,2]
+Regs(!=0): x0=3 	<tap return>Step 21
+  26: Pop
+Stack:     [7,4,29,3,2]
+Regs(!=0): x0=2 	<tap return>
+
+Step 22
+  27: Call 8
+Stack:     [7,4,29,3]
+Regs(!=0): x0=2 	<tap return>Step 23
+   8: Fetch 0
+Stack:     [7,4,29,3,29]
+Regs(!=0): x0=2 	<tap return>
+Step 24
+  10: Jnz 7
+Stack:     [7,4,29,3,29,2]
+Regs(!=0): x0=2 	<tap return>
+Step 25
+  18: Fetch 0
+Stack:     [7,4,29,3,29]
+Regs(!=0): x0=2 	<tap return>
+
+Step 26
+  20: Dup
+Stack:     [7,4,29,3,29,2]
+Regs(!=0): x0=2 	<tap return>Step 27
+  21: Push 1
+Stack:     [7,4,29,3,29,2,2]
+Regs(!=0): x0=2 	<tap return>
+
+Step 28
+  23: Isub
+Stack:     [7,4,29,3,29,2,2,1]
+Regs(!=0): x0=2 	<tap return>Step 29
+  24: Store 0
+Stack:     [7,4,29,3,29,2,1]
+Regs(!=0): x0=2 	<tap return>
+
+Step 30
+  26: Pop
+Stack:     [7,4,29,3,29,2,1]
+Regs(!=0): x0=1 	<tap return>Step 31
+  27: Call 8
+Stack:     [7,4,29,3,29,2]
+Regs(!=0): x0=1 	<tap return>
+
+Step 32
+   8: Fetch 0
+Stack:     [7,4,29,3,29,2,29]
+Regs(!=0): x0=1 	<tap return>Step 33
+  10: Jnz 7
+Stack:     [7,4,29,3,29,2,29,1]
+Regs(!=0): x0=1 	<tap return>
+Step 34
+  18: Fetch 0
+Stack:     [7,4,29,3,29,2,29]
+Regs(!=0): x0=1 	<tap return>
+Step 35
+  20: Dup
+Stack:     [7,4,29,3,29,2,29,1]
+Regs(!=0): x0=1 	<tap return>
+
+Step 36
+  21: Push 1
+Stack:     [7,4,29,3,29,2,29,1,1]
+Regs(!=0): x0=1 	<tap return>Step 37
+  23: Isub
+Stack:     [7,4,29,3,29,2,29,1,1,1]
+Regs(!=0): x0=1 	<tap return>
+
+Step 38
+  24: Store 0
+Stack:     [7,4,29,3,29,2,29,1,0]
+Regs(!=0): x0=1 	<tap return>Step 39
+  26: Pop
+Stack:     [7,4,29,3,29,2,29,1,0]
+Regs(!=0): 	<tap return>
+
+Step 40
+  27: Call 8
+Stack:     [7,4,29,3,29,2,29,1]
+Regs(!=0): 	<tap return>Step 41
+   8: Fetch 0
+Stack:     [7,4,29,3,29,2,29,1,29]
+Regs(!=0): 	<tap return>
+
+Step 42
+  10: Jnz 7
+Stack:     [7,4,29,3,29,2,29,1,29,0]
+Regs(!=0): 	<tap return>Step 43
+  12: Push 1
+Stack:     [7,4,29,3,29,2,29,1,29]
+Regs(!=0): 	<tap return>
+Step 44
+  14: Store 1
+Stack:     [7,4,29,3,29,2,29,1,29,1]
+Regs(!=0): 	<tap return>
+Step 45
+  16: Pop
+Stack:     [7,4,29,3,29,2,29,1,29,1]
+Regs(!=0): x1=1 	<tap return>
+Step 46
+  17: Ret
+Stack:     [7,4,29,3,29,2,29,1,29]
+Regs(!=0): x1=1 	<tap return>
+
+Step 47
+  29: Fetch 1
+Stack:     [7,4,29,3,29,2,29,1]
+Regs(!=0): x1=1 	<tap return>Step 48
+  31: Imult
+Stack:     [7,4,29,3,29,2,29,1,1]
+Regs(!=0): x1=1 	<tap return>
+
+Step 49
+  32: Store 1
+Stack:     [7,4,29,3,29,2,29,1]
+Regs(!=0): x1=1 	<tap return>Step 50
+  34: Pop
+Stack:     [7,4,29,3,29,2,29,1]
+Regs(!=0): x1=1 	<tap return>
+Step 51
+  35: Ret
+Stack:     [7,4,29,3,29,2,29]
+Regs(!=0): x1=1 	<tap return>
+Step 52
+  29: Fetch 1
+Stack:     [7,4,29,3,29,2]
+Regs(!=0): x1=1 	<tap return>
+
+Step 53
+  31: Imult
+Stack:     [7,4,29,3,29,2,1]
+Regs(!=0): x1=1 	<tap return>Step 54
+  32: Store 1
+Stack:     [7,4,29,3,29,2]
+Regs(!=0): x1=1 	<tap return>
+
+Step 55
+  34: Pop
+Stack:     [7,4,29,3,29,2]
+Regs(!=0): x1=2 	<tap return>Step 56
+  35: Ret
+Stack:     [7,4,29,3,29]
+Regs(!=0): x1=2 	<tap return>
+Step 57
+  29: Fetch 1
+Stack:     [7,4,29,3]
+Regs(!=0): x1=2 	<tap return>
+Step 58
+  31: Imult
+Stack:     [7,4,29,3,2]
+Regs(!=0): x1=2 	<tap return>
+
+Step 59
+  32: Store 1
+Stack:     [7,4,29,6]
+Regs(!=0): x1=2 	<tap return>Step 60
+  34: Pop
+Stack:     [7,4,29,6]
+Regs(!=0): x1=6 	<tap return>
+
+Step 61
+  35: Ret
+Stack:     [7,4,29]
+Regs(!=0): x1=6 	<tap return>Step 62
+  29: Fetch 1
+Stack:     [7,4]
+Regs(!=0): x1=6 	<tap return>
+Step 63
+  31: Imult
+Stack:     [7,4,6]
+Regs(!=0): x1=6 	<tap return>
+Step 64
+  32: Store 1
+Stack:     [7,24]
+Regs(!=0): x1=6 	<tap return>
+Step 65
+  34: Pop
+Stack:     [7,24]
+Regs(!=0): x1=24 	<tap return>
+
+Step 66
+  35: Ret
+Stack:     [7]
+Regs(!=0): x1=24 	<tap return>Step 67
+   7: Halt
+Stack:     []
+Regs(!=0): x1=24 	<tap return>
+
+*LCvm> 
